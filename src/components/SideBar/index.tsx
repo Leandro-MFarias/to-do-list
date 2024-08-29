@@ -41,7 +41,8 @@ export function SideBar() {
 
         const list = {
             id: crypto.randomUUID(),
-            name: listName
+            name: listName,
+            tasks: []
         }
 
         addList(list)
@@ -103,7 +104,9 @@ export function SideBar() {
                                 <Link to={`/lists/${list.id}`}>
                                     <div className="flex items-center justify-between w-full rounded-md text-xs text-zinc-400 hover:bg-hoverAside pl-3 px-1 py-2">
                                         {list.name}
-                                        <p className="[padding:1px_6px_1px_4px] text-end mr-3 px-1 rounded-sm bg-zinc-700 text-zinc-50">2</p>
+                                        <p className="[padding:1px_6px_1px_4px] text-end mr-3 px-1 rounded-sm bg-zinc-700 text-zinc-50">
+                                            {list.tasks.length}
+                                        </p>
                                     </div>
                                 </Link>
                             ))}
