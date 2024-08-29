@@ -12,7 +12,7 @@ export const TasksContext = createContext<TasksContextProps | undefined>(undefin
 export function TasksProvider( { children }: { children: ReactNode } ) {
     const [ tasksTotal, setTasksTotal ] = useState(0)
     const [ noteTotal, setNoteTotal ] = useState(0)
-
+    
     return (
         <TasksContext.Provider value={ { tasksTotal, setTasksTotal, noteTotal, setNoteTotal } }>
             { children }

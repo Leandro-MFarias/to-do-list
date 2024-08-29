@@ -58,10 +58,10 @@ export function StickyWall() {
                             {newNote.map(({ title, note, color }, index) => (
                                 <div key={index} className="flex flex-col gap-2 ${color} p-4 rounded-lg text-black h-80 w-80" style={ { backgroundColor: color } }>
                                     <div className="flex justify-between items-center">
-                                        <h4 className="text-xl font-semibold">{title}</h4>
+                                        <h4 className="text-2xl font-semibold">{title}</h4>
                                         <X onClick={() => removeNote(index)} className="hover:text-zinc-300 cursor-pointer" />
                                     </div>
-                                    <p className="px-2 font-light">
+                                    <p className="pl-4 pr-2">
                                         {note}
                                     </p>
                                 </div>

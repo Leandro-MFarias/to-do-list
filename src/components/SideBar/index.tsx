@@ -1,14 +1,18 @@
-import { Briefcase, ChevronsLeft, ChevronsRight, ListTodo, Plus, Search, SquareChartGantt, StickyNote } from "lucide-react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { ChevronsLeft, ChevronsRight, ListTodo, Plus, Search, StickyNote, X } from "lucide-react";
+import { useState, FormEvent } from "react";
+import { Link, useNavigate, } from "react-router-dom";
 import { HoverSideBar } from "../HoverSideBar";
 import { useNote, useTasks } from "../../Context";
+import { useLists } from "../../Context/useList";
 
 export function SideBar() {
+    const navigate = useNavigate()
     const { tasksTotal } = useTasks()
     const { noteTotal } = useNote()
+    const { newList, addList } = useLists()
     const [isBarOpen, setIsBarOpen] = useState(true)
     const [isMouseHovered, setIsMouseHovered] = useState(false)
+    const [isNewListModalOpen, setIsNewListModalOpen] = useState(false)
 
     function hideBar() {
         setIsBarOpen(false)
@@ -17,6 +21,32 @@ export function SideBar() {
     function showBar() {
         setIsBarOpen(true)
         setIsMouseHovered(false)
+    }
+
+    function openListModal() {
+        setIsNewListModalOpen(true)
+    }
+
+    function closeListModal() {
+        setIsNewListModalOpen(false)
+    }
+
+    function createList(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault()
+
+        const data = new FormData(event.currentTarget)
+        const listName = data.get('list')?.toString()
+
+        if (!listName) throw new Error("List name is required");
+
+        const list = {
+            id: crypto.randomUUID(),
+            name: listName
+        }
+
+        addList(list)
+
+        navigate(`/lists/${list.id}`)
     }
 
     return (
@@ -69,27 +99,40 @@ export function SideBar() {
                     <div className="space-y-2">
                         <span>LISTS</span>
                         <div>
-                            <a href="#" className="flex items-center w-full rounded-md text-xs text-zinc-400 hover:bg-hoverAside px-1 py-2">
-                                <div className="flex items-center gap-1 w-full">
-                                    <SquareChartGantt className="size-5 " />
-                                    <p>Personal</p>
-                                </div>
-                                <p className="[padding:1px_6px_1px_4px] text-end mr-3 px-1 rounded-sm bg-zinc-700 text-zinc-50">10</p>
-                            </a>
-                            <a href="#" className="flex items-center w-full rounded-md text-xs text-zinc-400 hover:bg-hoverAside px-1 py-2">
-                                <div className="flex items-center gap-1 w-full">
-                                    <Briefcase className="size-5 " />
-                                    <p>Work</p>
-                                </div>
-                                <p className="[padding:1px_6px_1px_4px] text-end mr-3 px-1 rounded-sm bg-zinc-700 text-zinc-50">2</p>
-                            </a>
+                            {newList.map(list => (
+                                <Link to={`/lists/${list.id}`}>
+                                    <div className="flex items-center justify-between w-full rounded-md text-xs text-zinc-400 hover:bg-hoverAside pl-3 px-1 py-2">
+                                        {list.name}
+                                        <p className="[padding:1px_6px_1px_4px] text-end mr-3 px-1 rounded-sm bg-zinc-700 text-zinc-50">2</p>
+                                    </div>
+                                </Link>
+                            ))}
                         </div>
 
-                        <button className="flex items-center text-sm text-zinc-400 pl-2 gap-2 hover:text-zinc-200">
+                        <button onClick={openListModal} className="flex items-center text-sm text-zinc-400 pl-2 gap-2 hover:text-zinc-200">
                             <Plus className="size-3" />
                             Add New List
                         </button>
                     </div>
+                    {isNewListModalOpen && (
+                        <div className="fixed w-full h-screen flex items-center justify-center bg-black/60 inset-0 -inset-y-8">
+                            <form onSubmit={(event) => createList(event)} className="flex flex-col min-h-24 min-w-80 rounded-xl bg-zinc-950 shadow-shape space-y-5 px-4 py-3 pb-5">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-xl mt-2">Create List</span>
+                                    <X onClick={closeListModal} className="text-zinc-600 hover:text-zinc-200 cursor-pointer" />
+                                </div>
+                                <div className="flex items-center bg-hoverAside rounded-md h-10 px-2 space-x-3">
+                                    <input type="text" name="list" placeholder="Name for your List" className="px-2 bg-transparent outline-none" />
+
+                                    <div className="w-px h-6 bg-zinc-700" />
+
+                                    <button type="submit" className="bg-teal-400 text-teal-950 hover:bg-teal-500 px-4 py-1 rounded-lg">
+                                        New List
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    )}
                 </div>
             ) : (
                 <div>

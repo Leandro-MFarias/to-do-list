@@ -63,7 +63,7 @@ export function HomeUpcomming() {
         <div className="flex h-screen space-x-32">
             <SideBar />
             <main className="pt-12 space-y-16 w-full">
-                <div className="flex items-baseline gap-4">
+                <div className="flex items-center gap-4">
                     <h2 className="text-5xl font-medium">Upcomming</h2>
                     <span className="text-2xl bg-zinc-300/40 py-0.5 px-2 rounded-md">
                         {tasksTotal}
