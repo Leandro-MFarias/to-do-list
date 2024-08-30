@@ -69,13 +69,13 @@ export function SideBar() {
                     <div className="w-full h-px bg-zinc-800" />
 
                     <nav className="flex flex-col">
-                        <span className="">TASKS</span>
+                        <span className="text-lg">TASKS</span>
                         <ul>
                             <Link to='/'>
                                 <li className="flex items-center w-full rounded-md text-xs text-zinc-400 hover:bg-hoverAside px-1 py-2">
-                                    <div className="flex items-center gap-1 w-full">
+                                    <div className="flex items-center gap-1.5 w-full">
                                         <ListTodo className="size-5 " />
-                                        <p>Upcomming</p>
+                                        <p className="text-sm">Upcomming</p>
                                     </div>
                                     <span className="[padding:1px_6px_1px_4px] text-end mr-3 px-1 rounded-sm bg-zinc-700 text-zinc-50">
                                         {tasksTotal}
@@ -85,9 +85,9 @@ export function SideBar() {
 
                             <Link to='stickyWall'>
                                 <li className="flex items-center w-full rounded-md text-xs text-zinc-400 hover:bg-hoverAside px-1 py-2">
-                                    <div className="flex items-center gap-1 w-full">
+                                    <div className="flex items-center gap-1.5 w-full">
                                         <StickyNote className="size-5 " />
-                                        <p>Sticky Wall</p>
+                                        <p className="text-sm">Sticky Wall</p>
                                     </div>
                                     <span className="[padding:1px_6px_1px_4px] text-end mr-3 px-1 rounded-sm bg-zinc-700 text-zinc-50">{noteTotal}</span>
                                 </li>
@@ -98,24 +98,27 @@ export function SideBar() {
                     <div className="w-full h-px bg-zinc-800" />
 
                     <div className="space-y-2">
-                        <span>LISTS</span>
-                        <div>
-                            {newList.map(list => (
-                                <Link to={`/lists/${list.id}`}>
-                                    <div className="flex items-center justify-between w-full rounded-md text-xs text-zinc-400 hover:bg-hoverAside pl-3 px-1 py-2">
-                                        {list.name}
-                                        <p className="[padding:1px_6px_1px_4px] text-end mr-3 px-1 rounded-sm bg-zinc-700 text-zinc-50">
-                                            {list.tasks.length}
-                                        </p>
-                                    </div>
-                                </Link>
-                            ))}
-                        </div>
+                        <span className="text-lg">LISTS</span>
 
-                        <button onClick={openListModal} className="flex items-center text-sm text-zinc-400 pl-2 gap-2 hover:text-zinc-200">
-                            <Plus className="size-3" />
-                            Add New List
-                        </button>
+                        <div className="space-y-3">
+                            <div>
+                                {newList.map(list => (
+                                    <Link to={`/lists/${list.id}`}>
+                                        <div className="flex items-center justify-between w-full rounded-md text-sm text-zinc-400 hover:bg-hoverAside pl-4 py-2">
+                                            {list.name}
+                                            <p className="[padding:1px_6px_1px_4px] text-end mr-3 px-1 rounded-sm bg-zinc-700 text-zinc-50">
+                                                {list.tasks.length}
+                                            </p>
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+
+                            <button onClick={openListModal} className="flex items-center text-sm text-zinc-400 pl-2 gap-2 hover:text-zinc-200">
+                                <Plus className="size-3" />
+                                Add New List
+                            </button>
+                        </div>
                     </div>
                     {isNewListModalOpen && (
                         <div className="fixed w-full h-screen flex items-center justify-center bg-black/60 inset-0 -inset-y-8">
@@ -149,7 +152,6 @@ export function SideBar() {
                     {isMouseHovered && (
                         <HoverSideBar />
                     )}
-
                 </div>
             )}
         </aside>
