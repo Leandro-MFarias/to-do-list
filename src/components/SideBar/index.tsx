@@ -83,7 +83,7 @@ export function SideBar() {
                                 </li>
                             </Link>
 
-                            <Link to='stickyWall'>
+                            <Link to='/stickyWall'>
                                 <li className="flex items-center w-full rounded-md text-xs text-zinc-400 hover:bg-hoverAside px-1 py-2">
                                     <div className="flex items-center gap-1.5 w-full">
                                         <StickyNote className="size-5 " />
